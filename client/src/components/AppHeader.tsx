@@ -30,8 +30,9 @@ return(
 
           <HeaderDropdown />
       </section>
+      <Link to="/signUp">
       <button id="loginbtn"  style={{ height: 'fit-content', marginTop: '4px' }} className="button">Sign up</button>
-
+      </Link>
 
   </header>
 )
