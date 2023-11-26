@@ -12,6 +12,7 @@ import {
 } from "react-router-dom"
 import React from "react";
 import UserLogin from "./components/UserLogin";
+import SignUpForm from "./components/SignUp";
 
 
 
@@ -25,6 +26,7 @@ function App() {
           {/*<Route path="/categories" element={<CategoryBookList />} />*/}
             <Route path="/adminLogin" element={<AdminLogin />} />
             <Route path="/userLogin" element={<UserLogin />} />
+            <Route path="/signUp" element={<SignUpForm />} />
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
 
