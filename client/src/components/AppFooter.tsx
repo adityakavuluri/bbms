@@ -7,8 +7,8 @@ function AppFooter(){
 return(
   <footer id="footerHeight" className="container">
     <section className="links">
-      <Link to="/">about</Link>
-      <Link to="/">contact</Link>
+      <Link to="/aboutUs">about</Link>
+      <Link to="/contactUs">contact</Link>
       <Link to="/">directions</Link>
     </section>
     <section className="social-media-icons">

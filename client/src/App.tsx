@@ -12,6 +12,9 @@ import {
 } from "react-router-dom"
 import React from "react";
 import UserLogin from "./components/UserLogin";
+import ContactUs from "./components/ContactUs";
+import AboutUs from "./components/AboutUs";
+import UserDashboard from "./components/UserDashboard";
 
 
 
@@ -25,6 +28,9 @@ function App() {
           {/*<Route path="/categories" element={<CategoryBookList />} />*/}
             <Route path="/adminLogin" element={<AdminLogin />} />
             <Route path="/userLogin" element={<UserLogin />} />
+            <Route path="/userDashboard" element={<UserDashboard />} />
+            <Route path="/aboutUs" element={<AboutUs />} />
+            <Route path="/contactUs" element={<ContactUs />} />
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
 

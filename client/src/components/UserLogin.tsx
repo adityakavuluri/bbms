@@ -1,5 +1,6 @@
 import '../assets/css/login.css'
 import React, { useState } from 'react';
+import {Link} from "react-router-dom";
 
 function UserLogin() {
     const [username, setUsername] = useState('');
@@ -46,9 +47,10 @@ function UserLogin() {
                     style={{ borderColor: '#ad0f0f', borderRadius: '6px' }}
                 />
             </div>
+            <Link to="/userDashboard">
             <button className="button" onClick={handleLogin} style={{  borderRadius: '8px' }}>
                 Login
-            </button>
+            </button></Link>
             <div className="forgot-password">
                 <a href="#" onClick={handleForgotPassword}>
                     Forgot Password?
