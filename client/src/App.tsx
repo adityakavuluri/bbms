@@ -24,15 +24,6 @@ import ManageDonors from "./components/ManageDonors";
 import AboutUs from "./components/AboutUs";
 import UserDashboard from "./components/UserDashboard";
 
-import SignUpForm from "./components/SignUp";
-import AdminDashboard from "./components/AdminDashboard";
-import PastAppointments from "./components/PastAppointments";
-import NewAppointments from "./components/NewAppointments";
-import PatientRecords from "./components/PatientRecords";
-import BloodBankData from "./components/BloodBankData";
-import ManageDonors from "./components/ManageDonors";
-
-
 
 
 function App() {
