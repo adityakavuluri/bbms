@@ -38,8 +38,7 @@ label {
     font-weight: bold;
 }
 
-input,
-textarea {
+.aptinput{
     width: 100%;
     padding: 10px;
     font-size: 16px;

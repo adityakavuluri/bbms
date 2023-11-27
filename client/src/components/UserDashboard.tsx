@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../assets/css/UserDashboard.css';
+import {Link} from "react-router-dom";
 
 const UserDashboard = () => {
     const [bloodAvailability, setBloodAvailability] = useState<null | string>(null);
@@ -36,9 +37,12 @@ const UserDashboard = () => {
     return (
         <div>
             <h1 id="title">User Dashboard</h1>
+            <Link to="/AppointmentPage">
+
             <button id="userdasfbtm" className="button" onClick={handleBookAppointment}>
                 Book Appointment
             </button>
+            </Link>
             <button id="userdasfbtm" className="button" onClick={handleUpcomingAppointments}>
                 Upcoming Appointments
             </button>
