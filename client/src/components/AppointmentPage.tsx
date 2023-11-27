@@ -62,17 +62,17 @@ function AppointmentPage() {
                     <h2>Donor Application</h2>
                     <div className="form-group">
                         <label>Name:</label>
-                        <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
+                        <input className="aptinput" type="text" name="name" value={formData.name} onChange={handleInputChange} required />
                     </div>
 
                     <div className="form-group">
                         <label>Age:</label>
-                        <input type="number" name="age" value={formData.age} onChange={handleInputChange} required />
+                        <input className="aptinput" type="number" name="age" value={formData.age} onChange={handleInputChange} required />
                     </div>
 
                     <div className="form-group">
                         <label>Blood Type:</label>
-                        <input
+                        <input className="aptinput"
                             type="text"
                             name="bloodType"
                             value={formData.bloodType}
@@ -83,7 +83,7 @@ function AppointmentPage() {
 
                     <div className="form-group">
                         <label>Date Needed:</label>
-                        <input
+                        <input className="aptinput"
                             type="date"
                             name="dateNeeded"
                             value={formData.dateNeeded}
@@ -94,7 +94,7 @@ function AppointmentPage() {
 
                     <div className="form-group">
                         <label>Phone Number:</label>
-                        <input
+                        <input className="aptinput"
                             type="text"
                             name="phoneNumber"
                             value={formData.phoneNumber}
@@ -105,7 +105,7 @@ function AppointmentPage() {
 
                     <div className="form-group">
                         <label>Previous Medical Injuries:</label>
-                        <textarea
+                        <textarea className="aptinput"
                             name="medicalInjuries"
                             value={formData.medicalInjuries}
                             onChange={handleInputChange}
@@ -123,12 +123,12 @@ function AppointmentPage() {
                     <h2>Recipient Application</h2>
                     <div className="form-group">
                         <label>Name:</label>
-                        <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
+                        <input className="aptinput" type="text" name="name" value={formData.name} onChange={handleInputChange} required />
                     </div>
 
                     <div className="form-group">
                         <label>Blood Type:</label>
-                        <input
+                        <input className="aptinput"
                             type="text"
                             name="bloodType"
                             value={formData.bloodType}
@@ -139,7 +139,7 @@ function AppointmentPage() {
 
                     <div className="form-group">
                         <label>Blood Amount Needed:</label>
-                        <input
+                        <input className="aptinput"
                             type="text"
                             name="bloodAmount"
                             value={formData.bloodAmount}
@@ -150,7 +150,7 @@ function AppointmentPage() {
 
                     <div className="form-group">
                         <label>Date Needed:</label>
-                        <input
+                        <input className="aptinput"
                             type="date"
                             name="dateNeeded"
                             value={formData.dateNeeded}
@@ -161,7 +161,7 @@ function AppointmentPage() {
 
                     <div className="form-group">
                         <label>Phone Number:</label>
-                        <input
+                        <input className="aptinput"
                             type="text"
                             name="phoneNumber"
                             value={formData.phoneNumber}
@@ -172,7 +172,7 @@ function AppointmentPage() {
 
                     <div className="form-group">
                         <label>Location:</label>
-                        <input type="text" name="location" value={formData.location} onChange={handleInputChange} required />
+                        <input className="aptinput" type="text" name="location" value={formData.location} onChange={handleInputChange} required />
                     </div>
 
                     <button type="submit" className="submit-button">

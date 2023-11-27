@@ -23,17 +23,7 @@ import ManageDonors from "./components/ManageDonors";
     import ContactUs from "./components/ContactUs";
 import AboutUs from "./components/AboutUs";
 import UserDashboard from "./components/UserDashboard";
-
-
-
-import SignUpForm from "./components/SignUp";
-import AdminDashboard from "./components/AdminDashboard";
-import PastAppointments from "./components/PastAppointments";
-import NewAppointments from "./components/NewAppointments";
-import PatientRecords from "./components/PatientRecords";
-import BloodBankData from "./components/BloodBankData";
-import ManageDonors from "./components/ManageDonors";
-
+import AppointmentPage from "./components/AppointmentPage";
 
 function App() {
 
@@ -58,6 +48,7 @@ function App() {
                 <Route path="/patientRecords" element = {<PatientRecords />} />
                 <Route path="/bloodBankData" element = {<BloodBankData />} />
                 <Route path="/manageDonors" element = {<ManageDonors />} />
+                <Route path="/AppointmentPage" element = {<AppointmentPage />} />
 
                 <Route path="*" element={<div>Page Not Found</div>} />
 
@@ -83,6 +74,7 @@ function App() {
             <Route path="/patientRecords" element = {<PatientRecords />} />
             <Route path="/bloodBankData" element = {<BloodBankData />} />
             <Route path="/manageDonors" element = {<ManageDonors />} />
+            <Route path="/appointmentPage" element = {<AppointmentPage />} />
 
             <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
