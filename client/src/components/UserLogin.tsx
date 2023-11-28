@@ -37,7 +37,7 @@ function UserLogin() {
                     style={{ borderColor: '#ad0f0f', borderRadius: '6px' }}
                 />
             </div>
-            <div className="input-container"  style={{ padding: 88, marginTop: '-52px', color: '#ad0f0f' }}>
+            <div className="input-container"  style={{ padding: 48, marginTop: '-52px', color: '#ad0f0f' }}>
                 <label htmlFor="password" style={{ padding: '20px'}}>Password:</label>
                 <input
                     type="password"

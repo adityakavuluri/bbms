@@ -35,8 +35,8 @@ const UserDashboard = () => {
     };
 
     return (
-        <div>
-            <h1 id="title">User Dashboard</h1>
+        <div id="userDash">
+            <h2 id="title" style={{padding: '25px', color: 'rgb(173, 15, 15)'}}>User Dashboard</h2>
             <Link to="/AppointmentPage">
 
             <button id="userdasfbtm" className="button" onClick={handleBookAppointment}>

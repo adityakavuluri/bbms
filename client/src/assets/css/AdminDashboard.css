@@ -32,7 +32,7 @@ h1 {
     height: 90px;
     width: 160px;
     /* margin-right: -10px; */
-    margin-left: 1%;
+    margin-left: 12%;
 }
 
 #pastAppoint {
@@ -57,7 +57,7 @@ h1 {
     width: 160px;
     margin-top: 40px;
     margin-left: 6%;
-    margin-left: 1%;
+    margin-left: 12%;
 }
 
 #handleManageDonors {
@@ -82,4 +82,14 @@ h1 {
 
 .admin-container {
     margin-bottom: 10%;
+
 }
+
+#root{
+    background-image: url('../images/bbmHome/bbm5.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+

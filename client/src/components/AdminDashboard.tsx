@@ -31,7 +31,7 @@ const AdminDashboard = () => {
 
     return (
         <div className="admin-container">
-            <h1>Admin Dashboard</h1>
+            <h2 style={{padding: '25px', color: 'rgb(173, 15, 15)'}}>Admin Dashboard</h2>
             <div className="button-row">
                 <Link to= "/newAppointment">
                 <button id="newAppoint" className="button" onClick={handleNewAppointments}>New Appointments</button>
