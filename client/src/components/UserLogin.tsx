@@ -22,7 +22,7 @@ function UserLogin() {
     async function handleLogin(event:FormEvent) {
         event.preventDefault();
         try {
-            await axios.post("http://localhost:8080/api/user/login", {
+            await axios.post("/api/user/login", {
                 username: username,
                 password: password,
             }).then((res) =>
