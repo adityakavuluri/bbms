@@ -1,11 +1,13 @@
 import '../assets/css/login.css'
-import React, { useState } from 'react';
+import React, {FormEvent, useState} from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 function AdminLogin() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    const navigate = useNavigate();
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value);
     };
@@ -14,10 +16,44 @@ function AdminLogin() {
         setPassword(e.target.value);
     };
 
-    const handleLogin = () => {
-        // You can add login functionality here
-        console.log(`Username: ${username}, Password: ${password}`);
-    };
+    // async function  handleLogin (event:FormEvent) {
+    //     event.preventDefault();
+    //     // You can add login functionality here
+    //     console.log(`Username: ${username}, Password: ${password}`);
+    // };
+
+    async function handleLogin(event:FormEvent) {
+        event.preventDefault();
+        try {
+            await axios.post("http://localhost:8080/api/admin/login", {
+                username: username,
+                password: password,
+            }).then((res) =>
+            {
+                console.log(res.data);
+                if (res.data.message === "username does not exits")
+                {
+                    alert("Username does not exist");
+                }
+                else if(res.data.message === "Login Success")
+                {
+
+                    navigate('/adminDashboard');
+                }
+                else
+                {
+                    alert("Incorrect Email or Password");
+                }
+            }, fail => {
+                console.error(fail); // Error!
+            });
+        }
+
+        catch (err) {
+            alert(err);
+        }
+
+    }
 
     const handleForgotPassword = () => {
         // Add functionality for forgot password here
@@ -33,7 +69,9 @@ function AdminLogin() {
                     type="text"
                     id="username"
                     value={username}
-                    onChange={handleUsernameChange}
+                    onChange={(event) => {
+                        setUsername(event.target.value);
+                    }}
                     style={{ borderColor: '#ad0f0f', borderRadius: '6px' }}
                 />
             </div>
@@ -43,15 +81,17 @@ function AdminLogin() {
                     type="password"
                     id="password"
                     value={password}
-                    onChange={handlePasswordChange}
+                    onChange={(event) => {
+                        setPassword(event.target.value);
+                    }}
                     style={{ borderColor: '#ad0f0f', borderRadius: '6px' }}
                 />
             </div>
-            <Link to="/adminDashboard">
+            {/*<Link to="/adminDashboard">*/}
             <button className="button" onClick={handleLogin} style={{  borderRadius: '8px' }}>
                 Login
             </button>
-            </Link>
+            {/*</Link>*/}
             <div className="forgot-password">
                 <a href="#" onClick={handleForgotPassword}>
                     Forgot Password?
