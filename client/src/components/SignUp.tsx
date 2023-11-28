@@ -475,24 +475,6 @@ const SignUpForm = () => {
             <> {emailError && <div className="error"> {emailError}</div>}</>
 
 
-            <div style={{ padding: '0.5em' }}>
-                <label htmlFor="bloodGroup">Blood Group:</label>
-                <select
-                    style={{borderRadius: '8px',marginLeft: '31px', width: '20%'}}
-                    name="bloodType"
-                    className="signUpField"
-                    value={formData.bloodGroup}
-                    onChange={handleInputChange}
-                >
-                    <option value="">Select</option>
-                    {bloodTypes.map((type) => (
-                        <option key={type} value={type}>
-                            {type}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <> {bloodGroupError && <div className="error"> {bloodGroupError}</div>}</>
 
                 <div>
                     <label htmlFor="password">Password:</label>
@@ -517,6 +499,26 @@ const SignUpForm = () => {
                     />
                 </div>
                 <> {passwordError && <div className="error"> {passwordError}</div>}</>
+
+                <div style={{ padding: '0.5em' }}>
+                    <label htmlFor="bloodGroup">Blood Group:</label>
+                    <select
+                        style={{borderRadius: '8px',marginLeft: '31px', width: '20%'}}
+                        name="bloodType"
+                        className="signUpField"
+                        value={formData.bloodGroup}
+                        onChange={handleInputChange}
+                    >
+                        <option value="">Select</option>
+                        {bloodTypes.map((type) => (
+                            <option key={type} value={type}>
+                                {type}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <> {bloodGroupError && <div className="error"> {bloodGroupError}</div>}</>
+
 
                 <div>
                     <label htmlFor="selectedDate">Last Donated Date:</label>
