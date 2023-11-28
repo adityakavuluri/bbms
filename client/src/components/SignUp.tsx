@@ -5,9 +5,11 @@ import Select,{ ActionMeta, SingleValue } from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import DatePicker from 'react-datepicker';
+import { useNavigate } from 'react-router-dom';
 import 'react-datepicker/dist/react-datepicker.css';
+import axios from "axios";
 
-const bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+const bloodGroupList = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 
 const SignUpForm = () => {
     const [formData, setFormData] = useState({
@@ -57,6 +59,7 @@ const SignUpForm = () => {
         }
     };
 
+    const navigate = useNavigate();
 
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
@@ -88,6 +91,7 @@ const SignUpForm = () => {
 
         switch (name) {
             case 'firstName':
+                setFirstName(event.target.value);
                 setFormData((prevFormData) => ({...prevFormData, [name]: value}));
                 if(value.length < 4 || value.length > 45) {
                     setFirstNameError("First Name must be at least 4 characters long!");
@@ -97,6 +101,7 @@ const SignUpForm = () => {
                 }
                 break;
             case 'lastName':
+                setLastName(event.target.value);
                 setFormData((prevFormData) => ({...prevFormData, [name]: value}));
                 if(value.length < 4 || value.length > 45) {
                     setLastNameError("Last Name must be at least 4 characters long!");
@@ -107,6 +112,7 @@ const SignUpForm = () => {
                 break;
             case 'address':
 //addressError
+                setAddress(event.target.value);
                 setFormData((prevFormData) => ({...prevFormData, [name]: value}));
                 if(value.length < 4 || value.length > 45) {
                     setAddressError("Address must be at least 4 characters long!");
@@ -119,6 +125,7 @@ const SignUpForm = () => {
                 break;
             case 'phone':
 //phoneError
+                setPhone(event.target.value);
                 setFormData((prevFormData) => ({...prevFormData, [name]: value}));
                 if (!/^\d+$/.test(value) || value.length !== 10) {
                     setPhoneError("Phone number must be a 10-digit numeric value.");
@@ -131,6 +138,7 @@ const SignUpForm = () => {
                 break;
             case 'email':
 //emailError
+                setEmail(event.target.value);
                 setFormData((prevFormData) => ({...prevFormData, [name]: value}));
                 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
                     setEmailError("Invalid email address");
@@ -141,6 +149,7 @@ const SignUpForm = () => {
                 break;
 
             case 'age':
+                setAge(event.target.value);
                 setFormData((prevFormData) => ({...prevFormData, [name]: value}));
                 if (!/^\d+$/.test(value)) {
                     setAgeError("Age must be a valid number");
@@ -152,6 +161,7 @@ const SignUpForm = () => {
                 break;
 
             case 'gender':
+                setGender(event.target.value);
                 setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
                 if (!['male', 'female', 'other'].includes(value.toLowerCase())) {
                     setGenderError("Invalid gender selection");
@@ -160,6 +170,7 @@ const SignUpForm = () => {
                 }
                 break;
             case 'medicalHistory':
+                setMedicalHistory(event.target.value);
                 setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
                 if(value.length < 4 || value.length > 45) {
                     setMedicalHistoryError("Medical History must be at least 3 characters long!");
@@ -169,14 +180,16 @@ const SignUpForm = () => {
                 }
                 break;
             case 'bloodGroup':
+                setBloodGroup(event.target.value);
                 setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-                if (!bloodTypes.includes(value)) {
+                if (!bloodGroupList.includes(value)) {
                     setBloodGroupError("Invalid blood Group selection");
                 } else {
                     setBloodGroupError("");
                 }
                 break;
             case 'zipcode':
+                setZipcode(event.target.value);
                 setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
                   const isValidPincode = /^\d{5}$/.test(value);
 
@@ -187,6 +200,7 @@ const SignUpForm = () => {
                 }
                 break;
             case 'country':
+                setCountry(event.target.value);
                 setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
                 const isValidCountry = validCountries.includes(value);
 
@@ -197,6 +211,7 @@ const SignUpForm = () => {
                 }
                 break;
             case 'password':
+                setPassword(event.target.value);
                 setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
                   const passwordRegex = /^(?=.*[0-9])(?=.*[A-Z]).{6,}$/;
 
@@ -235,6 +250,19 @@ const SignUpForm = () => {
     const [emailError, setEmailError] = useState("");
 
     const [email, setEmail] = useState('');
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+
+    const [address, setAddress] = useState("");
+    const [gender, setGender] = useState("");
+    const [phone, setPhone] = useState("");
+    const [age, setAge] = useState("");
+    const [medicalHistory, setMedicalHistory] = useState("");
+    const [bloodGroup, setBloodGroup] = useState("");
+    const [password, setPassword] = useState("");
+    const [zipcode, setZipcode] = useState("");
+    const [country, setCountry] = useState("");
+
     const [isEmailValid, setIsEmailValid] = useState(true);
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -267,9 +295,31 @@ const SignUpForm = () => {
         console.log('Form Data:', formData);
         const isFormCorrect =  isValidForm(formData, firstNameError, lastNameError, addressError, phoneError, emailError,  genderError, ageError, medicalHistoryError, bloodGroupError, passwordError, zipcodeError, countryError);
         console.log(isFormCorrect);
+        if (!isFormCorrect) {
+            alert("Please fill all the fields correctly and try again.");
+        } else {
 
+            await axios.post("http://localhost:8080/api/user/save", {
+                firstName: firstName,
+                lastName: lastName,
+                address: address,
+                phone: phone,
+                email: email,
+                age:age,
+                gender: gender,
+                country: country,
+                bloodGroup: bloodGroup,
+                medicalHistory: medicalHistory,
+                password: password,
+                zipcode: zipcode,
+            });
+            alert("User registation is done successfully");
+            navigate('/userLogin');
+
+        }
 
     };
+
 
     const validCountries = [
         'USA', 'Canada', 'UK', 'Australia', 'India',
@@ -422,7 +472,8 @@ const SignUpForm = () => {
                         value={formData.country}
                         onChange={handleInputChange}
                     >
-                        <option value="">Select Country</option>
+                        {/*<option value="">Select Country</option>*/}
+                        <option value="" disabled hidden></option>
                         {validCountries.map((country) => (
                             <option key={country} value={country}>
                                 {country}
@@ -454,7 +505,7 @@ const SignUpForm = () => {
                     value={formData.gender}
                     onChange={handleInputChange}
                 >
-
+                    <option value="" disabled hidden></option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
@@ -504,15 +555,17 @@ const SignUpForm = () => {
                     <label htmlFor="bloodGroup">Blood Group:</label>
                     <select
                         style={{borderRadius: '8px',marginLeft: '31px', width: '20%'}}
-                        name="bloodType"
+                        name="bloodGroup"
+                        id="bloodGroup"
                         className="signUpField"
                         value={formData.bloodGroup}
                         onChange={handleInputChange}
                     >
-                        <option value="">Select</option>
-                        {bloodTypes.map((type) => (
-                            <option key={type} value={type}>
-                                {type}
+                       <option value="" disabled hidden></option>
+                        {bloodGroupList.map((bloodGroup) => (
+
+                            <option key={bloodGroup} value={bloodGroup}>
+                                {bloodGroup}
                             </option>
                         ))}
                     </select>
