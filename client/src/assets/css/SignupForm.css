@@ -60,4 +60,8 @@ form  .error {
     margin: 5px 0 0;
 }
 
-
+#selectedDate{
+    border-radius: 8px;
+    margin-left: 6px;
+    width: 107%;
+}

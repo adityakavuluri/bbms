@@ -31,7 +31,7 @@ const NewAppointments: React.FC = () => {
 
     return (
         <div className="new-appointments">
-            <h1>New Appointments</h1>
+            <h2 style={{padding: '25px', color: 'rgb(173, 15, 15)'}}>New Appointments</h2>
             <table>
                 <thead>
                 <tr>

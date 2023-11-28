@@ -2,6 +2,10 @@
 import '../assets/css/SignupForm.css'
 import React, {ChangeEvent, FormEvent, useState} from 'react';
 import Select,{ ActionMeta, SingleValue } from 'react-select';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 
@@ -11,12 +15,14 @@ const SignUpForm = () => {
         lastName: '',
         age: '',
         address: '',
-        gender: 'male',
+        gender: '',
         email: '',
         country: '',
         phone: '',
-        bloodType: 'A+',
+        bloodGroup: 'A+',
         medicalHistory: '',
+        password: '',
+        zipcode: ''
     });
 
     interface FormData {
@@ -28,9 +34,17 @@ const SignUpForm = () => {
         email: string;
         country: string;
         phone: string;
-        bloodType: string;
+        bloodGroup: string;
         medicalHistory: string;
+        password: string;
+        zipcode: string;
     }
+
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+    const handleDateChange = (date: Date | null) => {
+        setSelectedDate(date);
+    };
 
     const [countryCode, setCountryCode] = useState('+1');
 
@@ -42,6 +56,7 @@ const SignUpForm = () => {
             setCountryCode(selectedOption.value);
         }
     };
+
 
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
@@ -153,12 +168,42 @@ const SignUpForm = () => {
                     setMedicalHistoryError("");
                 }
                 break;
-            case 'bloodType':
+            case 'bloodGroup':
                 setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
                 if (!bloodTypes.includes(value)) {
-                    setBloodTypeError("Invalid blood type selection");
+                    setBloodGroupError("Invalid blood Group selection");
                 } else {
-                    setBloodTypeError("");
+                    setBloodGroupError("");
+                }
+                break;
+            case 'zipcode':
+                setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+                  const isValidPincode = /^\d{5}$/.test(value);
+
+                if (!isValidPincode) {
+                    setZipcodeError("Zip code must be a 5-digit number");
+                } else {
+                    setZipcodeError("");
+                }
+                break;
+            case 'country':
+                setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+                const isValidCountry = validCountries.includes(value);
+
+                if (!isValidCountry) {
+                    setCountryError("Invalid country");
+                } else {
+                    setCountryError("");
+                }
+                break;
+            case 'password':
+                setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+                  const passwordRegex = /^(?=.*[0-9])(?=.*[A-Z]).{6,}$/;
+
+                if (!passwordRegex.test(value)) {
+                    setPasswordError("Password must contain at least one numeric digit, one capital letter, and be at least 6 characters long");
+                } else {
+                    setPasswordError("");
                 }
                 break;
 
@@ -166,6 +211,12 @@ const SignUpForm = () => {
                 break;
         }
     }
+    const isDateBeforeCurrentDate = (selectedDate: Date): boolean => {
+        const lastDonatedDate = new Date(selectedDate);
+        const currentDate = new Date();
+
+        return lastDonatedDate < currentDate;
+    };
 
     const [firstNameError, setFirstNameError] = useState("");
     const [lastNameError, setLastNameError] = useState("");
@@ -175,7 +226,10 @@ const SignUpForm = () => {
     const [phoneError, setPhoneError] = useState("");
     const [ageError, setAgeError] = useState("");
     const [medicalHistoryError, setMedicalHistoryError] = useState("");
-    const [bloodTypeError, setBloodTypeError] = useState("");
+    const [bloodGroupError, setBloodGroupError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [zipcodeError, setZipcodeError] = useState("");
+    const [countryError, setCountryError] = useState("");
 
 
     const [emailError, setEmailError] = useState("");
@@ -200,19 +254,6 @@ const SignUpForm = () => {
         return emailRegex.test(email);
     };
 
-
-// Your handleCountryChange function
-//     const handleCountryCodeChange = (selectedOption: { label: string; value: string ) => {
-//         setCountryCode(selectedOption.value);
-//     };
-
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    //     // const { name, value } = e.target;
-    //     // setFormData((prevData) => ({ ...prevData, [name]: value }));
-    //     const { value } = e.target;
-    //     setFormData((prevData) => ({ ...prevData, phone: `${countryCode}${value}` }));
-    //
-    // };
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -224,10 +265,23 @@ const SignUpForm = () => {
         console.log("Submit order");
         // Add logic for form submission (e.g., API call or further processing)
         console.log('Form Data:', formData);
-        const isFormCorrect =  isValidForm(formData, firstNameError, lastNameError, addressError, phoneError, emailError,  genderError, ageError, medicalHistoryError, bloodTypeError);
+        const isFormCorrect =  isValidForm(formData, firstNameError, lastNameError, addressError, phoneError, emailError,  genderError, ageError, medicalHistoryError, bloodGroupError, passwordError, zipcodeError, countryError);
         console.log(isFormCorrect);
 
 
+    };
+
+    const validCountries = [
+        'USA', 'Canada', 'UK', 'Australia', 'India',
+        'Germany', 'France', 'Japan', 'Brazil', 'South Africa',
+        'China', 'Russia', 'Mexico', 'Italy', 'Spain',
+        'Argentina', 'Netherlands', 'Sweden', 'Norway', 'New Zealand'
+    ];
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
     };
 
     function isValidForm(
@@ -240,7 +294,11 @@ const SignUpForm = () => {
         genderError: string,
         ageError: string,
         medicalHistoryError: string,
-        bloodTypeError: string
+        bloodGroupError: string,
+        passwordError: string,
+
+        zipcodeError: string,
+        countryError: string,
     ): boolean {
         if (
             !formData.firstName ||
@@ -259,8 +317,14 @@ const SignUpForm = () => {
             formData.age.trim() === "" ||
             !formData.medicalHistory ||
             formData.medicalHistory.trim() === "" ||
-            !formData.bloodType ||
-            formData.bloodType.trim() === "" ||
+            !formData.bloodGroup ||
+            formData.bloodGroup.trim() === "" ||
+            !formData.password ||
+            formData.password.trim() === "" ||
+            !formData.zipcode ||
+            formData.zipcode.trim() === "" ||
+            !formData.country ||
+            formData.country.trim() === "" ||
             firstNameError !== "" ||
             lastNameError !== "" ||
             addressError !== "" ||
@@ -269,13 +333,15 @@ const SignUpForm = () => {
             genderError !== "" ||
             ageError !== "" ||
             medicalHistoryError !== "" ||
-            bloodTypeError !== ""
+            bloodGroupError !== "" ||
+            passwordError !== "" ||
+            zipcodeError !== "" ||
+            countryError !== ""
         ) {
-            // There is an error in the form
+
             return false;
         }
 
-        // All form fields are filled out and there are no validation errors
         return true;
     }
 
@@ -286,22 +352,6 @@ const SignUpForm = () => {
 
             <form  onSubmit={(event)=>handleSubmit(event)} method="post">
                 <h2 style={{ padding:'18px',color: 'rgb(173, 15, 15)'}}>Sign Up</h2>
-            {/*<label>*/}
-            {/*    First Name:*/}
-            {/*    <input type="text" className="signUpField" name="firstName" value={formData.firstName} onChange={handleChange} required />*/}
-            {/*</label>*/}
-
-            {/*<div>*/}
-            {/*    <label htmlFor="name">First Name</label>*/}
-            {/*    <input style={{ borderRadius: '8px' }}*/}
-            {/*           type="text"*/}
-            {/*           name="name"*/}
-            {/*           id="fname"*/}
-            {/*           value={formData.firstName}*/}
-            {/*           onChange={handleInputChange}*/}
-            {/*    />*/}
-            {/*</div>*/}
-            {/*<> {nameError && <div className="error"> {nameError}</div>}</>*/}
 
             <div style={{ padding: '0.5em' }}>
                 <label htmlFor="firstName">First Name</label>
@@ -331,7 +381,7 @@ const SignUpForm = () => {
 
             <div style={{ padding: '0.5em' }}>
                 <label htmlFor="phone">Phone</label>
-                <input  style={{borderRadius: '8px',marginLeft: '69px', width: '20%'}}
+                <input  style={{borderRadius: '8px',marginLeft: '35px', width: '20%'}}
                        type="text"
                        name="phone"
                        id="phone"
@@ -343,7 +393,7 @@ const SignUpForm = () => {
 
             <div style={{ padding: '0.5em' }}>
                 <label htmlFor="address">Address</label>
-                <textarea  style={{borderRadius: '8px',marginLeft: '64px', width: '20%'}}
+                <textarea  style={{borderRadius: '8px',marginLeft: '30px', width: '20%'}}
                           name="address"
                           id="address"
                           value={formData.address}
@@ -352,15 +402,40 @@ const SignUpForm = () => {
             </div>
             <> {addressError && <div className="error"> {addressError}</div>}</>
 
+                <div>
+                    <label htmlFor="zipcode">Zip Code:</label>
+                    <input style={{borderRadius: '8px',marginLeft: '30px', width: '20%', marginBottom: '15px'}}
+                        type="text"
+                        id="zipcode"
+                        name="zipcode"
+                        value={formData.zipcode}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <> {zipcodeError && <div className="error"> {zipcodeError}</div>}</>
 
-            {/*<label>*/}
-            {/*    Last Name:*/}
-            {/*    <input type="text" className="signUpField" name="lastName" value={formData.lastName} onChange={handleChange} required />*/}
-            {/*</label>*/}
+                <div>
+                    <label htmlFor="country">Country:</label>
+                    <select style={{borderRadius: '8px',marginLeft: '30px', width: '20%' , marginBottom: '15px'}}
+                        id="country"
+                        name="country"
+                        value={formData.country}
+                        onChange={handleInputChange}
+                    >
+                        <option value="">Select Country</option>
+                        {validCountries.map((country) => (
+                            <option key={country} value={country}>
+                                {country}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <> {countryError && <div className="error"> {countryError}</div>}</>
 
-            <div style={{ padding: '0.5em' }}>
+
+                <div style={{ padding: '0.5em' }}>
                 <label htmlFor="age">Age</label>
-                <input  style={{borderRadius: '8px',marginLeft: '96px', width: '20%'}}
+                <input  style={{borderRadius: '8px',marginLeft: '31px', width: '20%'}}
                        type="text"
                        name="age"
                        id="age"
@@ -370,15 +445,10 @@ const SignUpForm = () => {
             </div>
             <> {ageError && <div className="error"> {ageError}</div>}</>
 
-            {/*<label>*/}
-            {/*    Age:*/}
-            {/*    <input type="number" className="signUpField" name="age" value={formData.age} onChange={handleChange} required />*/}
-            {/*</label>*/}
-
             <div style={{ padding: '0.5em' }}>
                 <label htmlFor="gender">Gender</label>
                 <select
-                    style={{borderRadius: '8px',marginLeft: '75px', width: '20%'}}
+                    style={{borderRadius: '8px',marginLeft: '28px', width: '20%'}}
                     name="gender"
                     id="gender"
                     value={formData.gender}
@@ -392,25 +462,9 @@ const SignUpForm = () => {
             </div>
             <> {genderError && <div className="error"> {genderError}</div>}</>
 
-
-
-            {/*<label>*/}
-            {/*    Gender:*/}
-            {/*    <select name="gender" className="signUpField" value={formData.gender} onChange={handleChange}>*/}
-            {/*        <option value="male">Male</option>*/}
-            {/*        <option value="female">Female</option>*/}
-            {/*        <option value="other">Other</option>*/}
-            {/*    </select>*/}
-            {/*</label>*/}
-
-            {/*<label>*/}
-            {/*    Email:*/}
-            {/*    <input type="email" className="signUpField" name="email" value={formData.email} onChange={handleChange} required />*/}
-            {/*</label>*/}
-
             <div style={{ padding: '0.5em' }}>
                 <label htmlFor="email">Email</label>
-                <input  style={{borderRadius: '8px',marginLeft: '90px', width: '20%'}}
+                <input  style={{borderRadius: '8px',marginLeft: '30px', width: '20%'}}
                        type="text"
                        name="email"
                        id="email"
@@ -421,25 +475,13 @@ const SignUpForm = () => {
             <> {emailError && <div className="error"> {emailError}</div>}</>
 
 
-            {/*<label>*/}
-            {/*    Email:*/}
-            {/*    <input*/}
-            {/*        type="email"*/}
-            {/*        name="email"*/}
-            {/*        value={email}*/}
-            {/*        onChange={handleEmailChange}*/}
-            {/*        className={isEmailValid ? 'valid' : 'invalid'}*/}
-            {/*    />*/}
-            {/*</label>*/}
-            {/*{!isEmailValid && <p className="error-message" style={{color: 'brown', fontStyle: 'italic'}}>Please enter a valid email address</p>}*/}
-
             <div style={{ padding: '0.5em' }}>
-                <label htmlFor="bloodType">Blood Type:</label>
+                <label htmlFor="bloodGroup">Blood Group:</label>
                 <select
-                    style={{borderRadius: '8px',marginLeft: '47px', width: '20%'}}
+                    style={{borderRadius: '8px',marginLeft: '31px', width: '20%'}}
                     name="bloodType"
                     className="signUpField"
-                    value={formData.bloodType}
+                    value={formData.bloodGroup}
                     onChange={handleInputChange}
                 >
                     <option value="">Select</option>
@@ -450,23 +492,42 @@ const SignUpForm = () => {
                     ))}
                 </select>
             </div>
-            <> {bloodTypeError && <div className="error"> {bloodTypeError}</div>}</>
+            <> {bloodGroupError && <div className="error"> {bloodGroupError}</div>}</>
 
-            {/*<label>*/}
-            {/*    Blood Type:*/}
-            {/*    <select name="bloodType" className="signUpField" value={formData.bloodType} onChange={handleChange}>*/}
-            {/*        {bloodTypes.map((type) => (*/}
-            {/*            <option key={type} value={type}>*/}
-            {/*                {type}*/}
-            {/*            </option>*/}
-            {/*        ))}*/}
-            {/*    </select>*/}
-            {/*</label>*/}
+                <div>
+                    <label htmlFor="password">Password:</label>
+                    <input  style={{borderRadius: '8px',marginLeft: '65px', width: '20%', marginBottom: '14px'}}
+                        type={showPassword ? 'text' : 'password'}
+                        id="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                    />
+                    <input  style={{marginLeft: '10px'}}
+                        type="checkbox"
+                        id="showPassword"
+                        name="showPassword"
+                        checked={showPassword}
+                        onChange={togglePasswordVisibility}
+                    />
+                    <FontAwesomeIcon
+                        icon={showPassword ? faEye : faEyeSlash}
+                        className="eye-icon"
+                        onClick={togglePasswordVisibility}
+                    />
+                </div>
+                <> {passwordError && <div className="error"> {passwordError}</div>}</>
 
-            {/*<label>*/}
-            {/*    Medical History:*/}
-            {/*    <textarea className="signUpField" name="medicalHistory" value={formData.medicalHistory}  />*/}
-            {/*</label>*/}
+                <div>
+                    <label htmlFor="selectedDate">Last Donated Date:</label>
+                    <DatePicker
+                        id="selectedDate"
+                        selected={selectedDate}
+                        onChange={handleDateChange}
+                        dateFormat="dd/MM/yyyy"
+                        placeholderText="Select Date"
+                    />
+                </div>
 
             <div style={{ padding: '0.5em' }}>
                 <label htmlFor="medicalHistory">Medical History</label>
