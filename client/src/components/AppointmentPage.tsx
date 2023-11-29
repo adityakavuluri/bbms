@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
+import React, {FormEvent, useState} from 'react';
 import '../assets/css/AppointmentPage.css';
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 function AppointmentPage() {
     const [selectedOption, setSelectedOption] = useState('');
@@ -10,10 +12,11 @@ function AppointmentPage() {
         medicalInjuries: '',
         bloodAmount: '',
         phoneNumber: '',
-        location: '', dateNeeded: ''
+        location: '',
+        dateNeeded: ''
 
     });
-
+    const navigate = useNavigate();
     const handleOptionChange = (option: string) => {
         setSelectedOption(option);
         setFormData({
@@ -28,20 +31,136 @@ function AppointmentPage() {
         });
     };
 
+    const bloodGroupList = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-','a+', 'a-', 'b+', 'b-', 'ab+', 'ab-', 'o+', 'o-'];
+    const [nameError, setNameError] = useState("");
+    const [name, setName] = useState("");
+    const [dateNeeded, setDateNeeded] = useState("");
+
+    //bloodTypeError
+    const [bloodTypeError, setBloodTypeError] = useState("");
+    const [bloodType, setBloodType] = useState("");
+    const [ageError, setAgeError] = useState("");
+    const [age, setAge] = useState("");
+    //medicalInjuriesError
+    const [phoneNumberError, setPhoneNumberError] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [medicalInjuries, setMedicalInjuries] = useState("");
+    const [bloodAmount, setBloodAmount] = useState("");
+    const [location, setLocation] = useState("");
+
+    //location
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
+        switch (name) {
+            case 'name':
+                setName(e.target.value);
+                if(value.length < 4 || value.length > 45) {
+                    setNameError("Name must be at least 4 characters long!");
+                }
+                else {
+                    setNameError("");
+                }
+                break;
+            case 'age':
+                setAge(e.target.value);
+                if (!/^\d+$/.test(value)) {
+                    setAgeError("Age must be a valid number");
+                } else if (parseInt(value, 10) <= 16) {
+                    setAgeError("Age must be greater than 16");
+                } else {
+                    setAgeError("");
+                }
+                break;
+            case 'bloodType':
+                setBloodType(e.target.value);
+                if (!bloodGroupList.includes(value)) {
+                    setBloodTypeError("Invalid blood Type selection");
+                } else {
+                    setBloodTypeError("");
+                }
+                break;
+            case 'phoneNumber':
+                setPhoneNumber(e.target.value);
+                if (!/^\d+$/.test(value) || value.length !== 10) {
+                    setPhoneNumberError("Phone number must be a 10-digit numeric value.");
+                } else {
+                    setPhoneNumberError("");
+                }
+                break;
+            case 'dateNeeded':
+                setDateNeeded(e.target.value);
+                break;
+            case 'medicalInjuries':
+                setMedicalInjuries(e.target.value);
+                break;
+            case 'bloodAmount':
+                setBloodAmount(e.target.value);
+                break;
+            case 'location':
+                setLocation(e.target.value);
+
+                break;
+            default:
+                break;
+        }
     };
 
-    const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-        e.preventDefault();
+    async function handleSubmit(event:FormEvent){
+        event.preventDefault();
         // Handle form submission based on selected option
         console.log('Form Data:', formData);
-        // You can add your logic for handling the form data here
+        try {
+            if(selectedOption === 'donor') {
+                if (name === "" || age === "" || bloodType === "" || phoneNumber === "" || dateNeeded === "" || medicalInjuries === "") {
+                    alert("All fields are required");
+                } else {
+                    await axios.post("http://localhost:8080/api/user/bookAppointment", {
+                        name: name,
+                        age: age,
+                        bloodType: bloodType,
+                        dateNeeded: dateNeeded,
+                        medicalInjuries: medicalInjuries,
+                        phoneNumber: phoneNumber,
+                        bloodAmount: bloodAmount
+
+                    });
+
+                    alert("User Registation Successfully");
+                    navigate('/userDashboard');
+                }
+            }
+if(selectedOption === 'recipient') {
+    if ( name === "" || bloodType === "" || phoneNumber === "" || dateNeeded === "" || bloodAmount === "" || location === "") {
+        alert("All fields are required");
+    } else {
+        await axios.post("http://localhost:8080/api/user/bookAppointment", {
+            name: name,
+            age: age,
+            bloodType: bloodType,
+            dateNeeded: dateNeeded,
+            medicalInjuries: medicalInjuries,
+            phoneNumber: phoneNumber,
+            bloodAmount: bloodAmount,
+            location: location
+
+        });
+
+        alert("User Registation Successfully");
+        navigate('/userDashboard');
+    }
+}
+        } catch (err) {
+            alert(err);
+        }
     };
+
+
+
+
 
     return (
         <div className="app-container">
@@ -58,17 +177,19 @@ function AppointmentPage() {
             </select>
 
             {selectedOption === 'donor' && (
-                <form className="form-container" onSubmit={handleSubmit}>
+                <form className="form-container" onSubmit={(event)=>handleSubmit(event)}>
                     <h2>Donor Application</h2>
                     <div className="form-group">
                         <label>Name:</label>
                         <input className="aptinput" type="text" name="name" value={formData.name} onChange={handleInputChange} required />
                     </div>
+                    <> {nameError && <div className="error"> {nameError}</div>}</>
 
                     <div className="form-group">
                         <label>Age:</label>
                         <input className="aptinput" type="number" name="age" value={formData.age} onChange={handleInputChange} required />
                     </div>
+                    <> {ageError && <div className="error"> {ageError}</div>}</>
 
                     <div className="form-group">
                         <label>Blood Type:</label>
@@ -80,6 +201,7 @@ function AppointmentPage() {
                             required
                         />
                     </div>
+                    <> {bloodTypeError && <div className="error"> {bloodTypeError}</div>}</>
 
                     <div className="form-group">
                         <label>Date Needed:</label>
@@ -92,6 +214,7 @@ function AppointmentPage() {
                         />
                     </div>
 
+
                     <div className="form-group">
                         <label>Phone Number:</label>
                         <input className="aptinput"
@@ -102,6 +225,7 @@ function AppointmentPage() {
                             required
                         />
                     </div>
+                    <> {phoneNumberError && <div className="error"> {phoneNumberError}</div>}</>
 
                     <div className="form-group">
                         <label>Previous Medical Injuries:</label>
@@ -125,6 +249,7 @@ function AppointmentPage() {
                         <label>Name:</label>
                         <input className="aptinput" type="text" name="name" value={formData.name} onChange={handleInputChange} required />
                     </div>
+                    <> {nameError && <div className="error"> {nameError}</div>}</>
 
                     <div className="form-group">
                         <label>Blood Type:</label>
@@ -136,6 +261,7 @@ function AppointmentPage() {
                             required
                         />
                     </div>
+                    <> {bloodTypeError && <div className="error"> {bloodTypeError}</div>}</>
 
                     <div className="form-group">
                         <label>Blood Amount Needed:</label>
@@ -169,13 +295,14 @@ function AppointmentPage() {
                             required
                         />
                     </div>
+                    <> {phoneNumberError && <div className="error"> {phoneNumberError}</div>}</>
 
                     <div className="form-group">
                         <label>Location:</label>
                         <input className="aptinput" type="text" name="location" value={formData.location} onChange={handleInputChange} required />
                     </div>
 
-                    <button type="submit" className="submit-button">
+                    <button type="submit" className="submit-button" onClick={(event) => handleSubmit(event)}>
                         Submit
                     </button>
                 </form>
