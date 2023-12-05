@@ -1,18 +1,32 @@
 import React, { useState } from 'react';
 import '../assets/css/UserDashboard.css';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
 
 const UserDashboard = () => {
     const [bloodAvailability, setBloodAvailability] = useState<null | string>(null);
-
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
     const handleBookAppointment = () => {
         // Implement appointment booking logic
         console.log('Book Appointment button clicked');
     };
 
-    const handleUpcomingAppointments = () => {
+    const handleUpcomingAppointments = async () => {
         // Implement logic to fetch and display upcoming appointments
         console.log('Upcoming Appointments button clicked');
+        try {
+            setLoading(true);
+            navigate('/userUpcomingApt');
+            // const response = await axios.get(`http://localhost:8080/api/upcomingAppointments`);
+            //
+            // // Assume you have a route '/nextPage' where you want to display the upcoming appointments
+            // navigate('/userUpcomingApt', { state: { upcomingAppointments: response.data } });
+        } catch (error) {
+            console.error('Error fetching upcoming appointments:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleCheckAvailability = () => {
@@ -43,15 +57,21 @@ const UserDashboard = () => {
                 Book Appointment
             </button>
             </Link>
+
+
             <button id="userdasfbtm" className="button" onClick={handleUpcomingAppointments}>
                 Upcoming Appointments
             </button>
+
+            <Link to="/bloodAvailability">
             <button id="userdasfbtm" className="button" onClick={handleCheckAvailability}>
                 Blood Availability
-            </button>
+            </button></Link>
+
+            <Link to="/userDonationHistory">
             <button id="userdasfbtm" className="button" onClick={handleDonationHistory}>
                 Donation History
-            </button>
+            </button></Link>
 
             <div style={backgroundImageStyle}></div>
         </div>
