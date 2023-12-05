@@ -39,3 +39,14 @@ tr:nth-child(even) {
 td:hover {
     background-color: #e0e0e0;
 }
+
+
+.blood-bank-data {
+    /* Your existing styles for the blood-bank-data container */
+
+    .table-container {
+        max-height: 300px; /* Set the desired height */
+        overflow-y: auto;
+    }
+
+}

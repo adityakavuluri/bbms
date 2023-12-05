@@ -24,29 +24,16 @@ function AdminLogin() {
 
     async function handleLogin(event:FormEvent) {
         event.preventDefault();
+        // navigate('/adminDashboard');
         try {
-            await axios.post("http://localhost:8080/api/admin/login", {
-                username: username,
-                password: password,
-            }).then((res) =>
-            {
-                console.log(res.data);
-                if (res.data.message === "username does not exits")
-                {
-                    alert("Username does not exist");
-                }
-                else if(res.data.message === "Login Success")
-                {
+            if (username === 'admin' && password === 'admin') {
+                // Successful login
+                navigate('/adminDashboard');
+            } else {
+                // Incorrect username or password
+                alert('Incorrect Username or Password');
 
-                    navigate('/adminDashboard');
-                }
-                else
-                {
-                    alert("Incorrect Email or Password");
-                }
-            }, fail => {
-                console.error(fail); // Error!
-            });
+            }
         }
 
         catch (err) {

@@ -2,23 +2,22 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../assets/css/PastAppointments.css';
 interface Appointment {
-    customerId: string;
-    name: string;
-    age: number;
-    sex: string;
-    category: string;
+    role: string;
+    email:string;
+    age: string;
+    phone: string;
     bloodType: string;
-    quantity: number;
+    dateNeeded:string;
 }
 
 const PastAppointments: React.FC = () => {
-    const [pastAppointments, setPastAppointments] = useState<Appointment[]>([]);
+     const [pastAppointments, setPastAppointments] = useState<Appointment[]>([]);
 
     useEffect(() => {
         // Fetch past appointments from the backend API
         const fetchPastAppointments = async () => {
             try {
-                const response = await axios.get<Appointment[]>('/api/past-appointments'); // Adjust the API endpoint
+                const response = await axios.get<Appointment[]>('http://localhost:8080/api/adminPastAppointments'); // Adjust the API endpoint
                 setPastAppointments(response.data);
             } catch (error) {
                 console.error('Error fetching past appointments:', error);
@@ -30,33 +29,34 @@ const PastAppointments: React.FC = () => {
 
     return (
         <div className="past-appointments">
-            <h1>Past Appointments</h1>
+            <h2 style={{padding: '25px', color: 'rgb(173, 15, 15)'}}>Past Appointments</h2>
+            <div className="table-container">
             <table>
                 <thead>
                 <tr>
-                    <th>Customer ID</th>
-                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Email</th>
+
                     <th>Age</th>
-                    <th>Sex</th>
-                    <th>Category</th>
+                    <th>Phone</th>
                     <th>Blood Type</th>
-                    <th>Quantity</th>
+                    <th>Date</th>
                 </tr>
                 </thead>
                 <tbody>
                 {pastAppointments.map(appointment => (
-                    <tr key={appointment.customerId}>
-                        <td>{appointment.customerId}</td>
-                        <td>{appointment.name}</td>
+                    <tr key={appointment.role}>
+                        <td>{appointment.role}</td>
+                        <td>{appointment.email}</td>
+
                         <td>{appointment.age}</td>
-                        <td>{appointment.sex}</td>
-                        <td>{appointment.category}</td>
+                        <td>{appointment.phone}</td>
                         <td>{appointment.bloodType}</td>
-                        <td>{appointment.quantity}</td>
+                        <td>{appointment.dateNeeded}</td>
                     </tr>
                 ))}
                 </tbody>
-            </table>
+            </table></div>
         </div>
     );
 };

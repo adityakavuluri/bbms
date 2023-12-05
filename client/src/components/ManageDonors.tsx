@@ -1,31 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../assets/css/ManageDonors.css'; // Adjust the CSS file name as needed
+import '../assets/css/ManageDonors.css';
 
 interface Donor {
-    donorId: string;
     name: string;
-    address: string;
-    phoneNumber: string;
-    email: string;
-    bloodGroup: string;
-    height: number;
-    weight: number;
-    rbcCount: number;
-    wbcCount: number;
-    plateletsCount: number;
-    bpLevel: string;
-    medicalHistory: string;
+    role: string;
+    email:string;
+    age: string;
+    phone: string;
+    bloodType: string;
+    dateNeeded:string;
 }
 
 const ManageDonors: React.FC = () => {
-    const [donors, setDonors] = useState<Donor[]>([]);
+     const [donors, setDonors] = useState<Donor[]>([]);
 
     useEffect(() => {
         // Fetch donor data from the backend API
         const fetchDonors = async () => {
             try {
-                const response = await axios.get<Donor[]>('/api/manage-donors'); // Adjust the API endpoint
+                const response = await axios.get<Donor[]>('http://localhost:8080/api/getDonorData'); // Adjust the API endpoint
                 setDonors(response.data);
             } catch (error) {
                 console.error('Error fetching donor data:', error);
@@ -37,45 +31,34 @@ const ManageDonors: React.FC = () => {
 
     return (
         <div className="manage-donors">
-            <h1>Manage Donors</h1>
+            <h2 style={{padding: '25px', color: 'rgb(173, 15, 15)'}}>Manage Donors</h2>
+            <div className="table-container">
             <table>
                 <thead>
                 <tr>
-                    <th>Donor ID</th>
                     <th>Name</th>
-                    <th>Address</th>
-                    <th>Phone Number</th>
+                    <th>Role</th>
                     <th>Email</th>
-                    <th>Blood Group</th>
-                    <th>Height</th>
-                    <th>Weight</th>
-                    <th>RBC Count</th>
-                    <th>WBC Count</th>
-                    <th>Platelets Count</th>
-                    <th>BP Level</th>
-                    <th>Medical History</th>
+                    <th>Age</th>
+                    <th>Phone</th>
+                    <th>Blood Type</th>
+                    <th>Date</th>
                 </tr>
                 </thead>
                 <tbody>
                 {donors.map(donor => (
-                    <tr key={donor.donorId}>
-                        <td>{donor.donorId}</td>
+                    <tr key={donor.name}>
                         <td>{donor.name}</td>
-                        <td>{donor.address}</td>
-                        <td>{donor.phoneNumber}</td>
+                        <td>{donor.role}</td>
                         <td>{donor.email}</td>
-                        <td>{donor.bloodGroup}</td>
-                        <td>{donor.height}</td>
-                        <td>{donor.weight}</td>
-                        <td>{donor.rbcCount}</td>
-                        <td>{donor.wbcCount}</td>
-                        <td>{donor.plateletsCount}</td>
-                        <td>{donor.bpLevel}</td>
-                        <td>{donor.medicalHistory}</td>
+                        <td>{donor.age}</td>
+                        <td>{donor.phone}</td>
+                        <td>{donor.bloodType}</td>
+                        <td>{donor.dateNeeded}</td>
                     </tr>
                 ))}
                 </tbody>
-            </table>
+            </table></div>
         </div>
     );
 };

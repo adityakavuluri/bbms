@@ -1,7 +1,7 @@
 import AppHeader from './components/AppHeader';
 import AppFooter from './components/AppFooter';
 import Home from './components/Home'
-import CategoryBookList from './components/CategoryBookList';
+
 import AdminLogin from './components/AdminLogin';
 
 
@@ -24,6 +24,10 @@ import ManageDonors from "./components/ManageDonors";
 import AboutUs from "./components/AboutUs";
 import UserDashboard from "./components/UserDashboard";
 import AppointmentPage from "./components/AppointmentPage";
+import userDonation from "./components/UserDonationHistory";
+import UserDonationHistory from "./components/UserDonationHistory";
+import BloodAvailability from "./components/BloodAvailability";
+import UserUpcomingApt from "./components/UserUpcomingApt";
 
 
 function App() {
@@ -50,6 +54,9 @@ function App() {
                 <Route path="/bloodBankData" element = {<BloodBankData />} />
                 <Route path="/manageDonors" element = {<ManageDonors />} />
                 <Route path="/AppointmentPage" element = {<AppointmentPage />} />
+                <Route path="/userDonationHistory" element = {<UserDonationHistory />} />
+                <Route path="/bloodAvailability" element = {<BloodAvailability />} />
+                <Route path="/userUpcomingApt" element = {<UserUpcomingApt />} />
 
                 <Route path="*" element={<div>Page Not Found</div>} />
 

@@ -4,11 +4,11 @@ import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 function UserLogin() {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setUsername(e.target.value);
+        setEmail(e.target.value);
     };
 
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,16 +21,17 @@ function UserLogin() {
     // };
     async function handleLogin(event:FormEvent) {
         event.preventDefault();
+       // navigate('/userDashboard');
         try {
-            await axios.post("/api/user/login", {
-                username: username,
+            await axios.post("http://localhost:8080/api/login", {
+                email: email,
                 password: password,
             }).then((res) =>
             {
                 console.log(res.data);
-                if (res.data.message === "username does not exits")
+                if (res.data.message === "Email does not exits")
                 {
-                    alert("Username does not exist");
+                    alert("Email does not exist");
                 }
                 else if(res.data.message === "Login Success")
                 {
@@ -61,13 +62,13 @@ function UserLogin() {
         <div className="login-page" style={{ backgroundColor: '#fff',  padding: '20px' ,  textAlign: 'center' }}>
             <h2 style={{ padding: 25, color: '#ad0f0f' }}>User Login</h2>
             <div className="input-container" style={{ padding: 42, color: '#ad0f0f' }}>
-                <label htmlFor="username" style={{ padding: '20px'}}>Username:</label>
+                <label htmlFor="email" style={{ padding: '20px'}}>Username:</label>
                 <input
                     type="text"
-                    id="username"
-                    value={username}
+                    id="email"
+                    value={email}
                     onChange={(event) => {
-                        setUsername(event.target.value);
+                        setEmail(event.target.value);
                     }}
                     style={{ borderColor: '#ad0f0f', borderRadius: '6px' }}
                 />

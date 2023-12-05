@@ -43,7 +43,7 @@ const AdminDashboard = () => {
 
                     </Link>
                 <Link to= "/patientRecords">
-                <button id="handlePatientRecords" className="button" onClick={handlePatientRecords}>Patient Records</button>
+                <button id="handlePatientRecords" className="button" onClick={handlePatientRecords}>Recipient Record</button>
                 </Link>
                 </div>
 
@@ -52,7 +52,7 @@ const AdminDashboard = () => {
                 <button id="handleBloodBankData" className="button" onClick={handleBloodBankData}>Blood Bank Data</button>
                 </Link>
                 <Link to="/manageDonors">
-                    <button id="handleManageDonors" className="button" onClick={handleManageDonors}>Manage Donors</button>
+                    <button id="handleManageDonors" className="button" onClick={handleManageDonors}>Donor Record</button>
                 </Link>
             </div>
         </div>

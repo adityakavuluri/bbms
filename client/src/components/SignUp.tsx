@@ -299,19 +299,19 @@ const SignUpForm = () => {
             alert("Please fill all the fields correctly and try again.");
         } else {
 
-            await axios.post("http://localhost:8080/api/user/save", {
+            await axios.post("http://localhost:8080/api/save", {
                 firstName: firstName,
                 lastName: lastName,
                 address: address,
                 phone: phone,
                 email: email,
                 age:age,
-                gender: gender,
+                sex: gender,
                 country: country,
                 bloodGroup: bloodGroup,
                 medicalHistory: medicalHistory,
                 password: password,
-                zipcode: zipcode,
+                pincode: zipcode,
             });
             alert("User registation is done successfully");
             navigate('/userLogin');

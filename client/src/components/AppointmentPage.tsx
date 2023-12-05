@@ -6,12 +6,14 @@ import {useNavigate} from "react-router-dom";
 function AppointmentPage() {
     const [selectedOption, setSelectedOption] = useState('');
     const [formData, setFormData] = useState({
+
         name: '',
         age: '',
         bloodType: '',
         medicalInjuries: '',
         bloodAmount: '',
         phoneNumber: '',
+        email: '',
         location: '',
         dateNeeded: ''
 
@@ -27,6 +29,7 @@ function AppointmentPage() {
             medicalInjuries: '',
             bloodAmount: '',
             phoneNumber: '',
+            email: '',
             location: '',
         });
     };
@@ -35,6 +38,7 @@ function AppointmentPage() {
     const [nameError, setNameError] = useState("");
     const [name, setName] = useState("");
     const [dateNeeded, setDateNeeded] = useState("");
+    const [email, setEmail] = useState("");
 
     //bloodTypeError
     const [bloodTypeError, setBloodTypeError] = useState("");
@@ -104,6 +108,10 @@ function AppointmentPage() {
                 setLocation(e.target.value);
 
                 break;
+            case 'email':
+                setEmail(e.target.value);
+
+                break;
             default:
                 break;
         }
@@ -115,17 +123,20 @@ function AppointmentPage() {
         console.log('Form Data:', formData);
         try {
             if(selectedOption === 'donor') {
-                if (name === "" || age === "" || bloodType === "" || phoneNumber === "" || dateNeeded === "" || medicalInjuries === "") {
+                if (name === "" || age === "" || bloodType === "" || phoneNumber === "" || dateNeeded === "" || medicalInjuries === "" ) {
                     alert("All fields are required");
-                } else {
-                    await axios.post("http://localhost:8080/api/user/bookAppointment", {
+                }
+                else {
+                    await axios.post("http://localhost:8080/api/bookAppointment", {
                         name: name,
                         age: age,
                         bloodType: bloodType,
                         dateNeeded: dateNeeded,
                         medicalInjuries: medicalInjuries,
-                        phoneNumber: phoneNumber,
-                        bloodAmount: bloodAmount
+                        phone: phoneNumber,
+                        email: email,
+                        bloodAmount: bloodAmount,
+                        role: selectedOption
 
                     });
 
@@ -134,18 +145,20 @@ function AppointmentPage() {
                 }
             }
 if(selectedOption === 'recipient') {
-    if ( name === "" || bloodType === "" || phoneNumber === "" || dateNeeded === "" || bloodAmount === "" || location === "") {
+    if ( name === "" || bloodType === "" || phoneNumber === "" || dateNeeded === "" || bloodAmount === "" || location === "" ) {
         alert("All fields are required");
     } else {
-        await axios.post("http://localhost:8080/api/user/bookAppointment", {
+        await axios.post("http://localhost:8080/api/bookAppointment", {
             name: name,
             age: age,
             bloodType: bloodType,
             dateNeeded: dateNeeded,
             medicalInjuries: medicalInjuries,
             phoneNumber: phoneNumber,
+            email: email,
             bloodAmount: bloodAmount,
-            location: location
+            location: location,
+            role: selectedOption
 
         });
 
@@ -164,10 +177,9 @@ if(selectedOption === 'recipient') {
 
     return (
         <div className="app-container">
-            <h1>Blood Donation Application</h1>
+            <h2 style={{padding: '25px', color: 'rgb(173, 15, 15)'}}>Blood Donation Application</h2>
             <label>Select Role:</label>
-            <select
-                className="select-role"
+            <select id="role" name = "role" className="select-role"
                 value={selectedOption}
                 onChange={(e) => handleOptionChange(e.target.value)}
             >
@@ -226,6 +238,18 @@ if(selectedOption === 'recipient') {
                         />
                     </div>
                     <> {phoneNumberError && <div className="error"> {phoneNumberError}</div>}</>
+
+                    <div className="form-group">
+                        <label>Email:</label>
+
+                        <input  className="aptinput"
+                                type="text"
+                                name="email"
+                                id="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                        />
+                    </div>
 
                     <div className="form-group">
                         <label>Previous Medical Injuries:</label>
@@ -296,6 +320,18 @@ if(selectedOption === 'recipient') {
                         />
                     </div>
                     <> {phoneNumberError && <div className="error"> {phoneNumberError}</div>}</>
+
+                    <div className="form-group">
+                        <label>Email:</label>
+
+                        <input  className="aptinput"
+                                type="text"
+                                name="email"
+                                id="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                        />
+                    </div>
 
                     <div className="form-group">
                         <label>Location:</label>
