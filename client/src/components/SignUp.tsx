@@ -299,7 +299,7 @@ const SignUpForm = () => {
             alert("Please fill all the fields correctly and try again.");
         } else {
 
-            await axios.post("http://localhost:8080/api/save", {
+            await axios.post("http://localhost:8080/api/user/save", {
                 firstName: firstName,
                 lastName: lastName,
                 address: address,
