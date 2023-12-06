@@ -20,7 +20,7 @@ const UserDonationHistory: React.FC = () => {
 
         const fetchuserDonation = async () => {
             try {
-                const response = await axios.get<userDonationData[]>('http://localhost:8080/api/getDonorData'); // Adjust the API endpoint
+                const response = await axios.get<userDonationData[]>('http://localhost:8080/api/pastDonorAppointments'); // Adjust the API endpoint
                 setuserDonation(response.data);
             } catch (error) {
                 console.error('Error fetching patient records:', error);
