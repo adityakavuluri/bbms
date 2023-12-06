@@ -297,3 +297,110 @@ Verify that the admin can view both upcoming and past appointments, and the syst
 ### Postconditions
 - Ensure the application state is as expected after viewing upcoming and past appointments.
 - Confirm that clicking the browser back button redirects the admin to the admin dashboard.
+
+## Acceptance Test Case for Admin View Records (Recipient, Donor, Blood Bank Data)
+
+### Objective
+Verify that the admin can view recipient records, donor records, and blood bank data. Confirm that the system provides the relevant information for each category. Additionally, check that clicking the browser back button redirects the admin to the admin dashboard.
+
+### Preconditions
+- Ensure the application is accessible.
+- The admin is logged in.
+- Navigate to the admin dashboard.
+
+### Test Steps
+#### Click on "Recipient Records" Button
+- Click on the "Recipient Records" button in the admin dashboard.
+
+#### Verify Display of Recipient Records
+- Confirm that the admin can see a list of recipient records.
+- Check that each record displays the name, role, email, age, phone, blood type, and date.
+
+#### Click on Browser Back Button
+- Click on the browser's back button.
+
+#### Verify Redirection to Admin Dashboard
+- Confirm that the admin is redirected to the admin dashboard.
+
+#### Click on "Donor Records" Button
+- Click on the "Donor Records" button in the admin dashboard.
+
+#### Verify Display of Donor Records
+- Confirm that the admin can see a list of donor records.
+- Check that each record displays the name, role, email, age, phone, blood type, and date.
+
+#### Click on Browser Back Button
+- Click on the browser's back button.
+
+#### Verify Redirection to Admin Dashboard
+- Confirm that the admin is redirected to the admin dashboard.
+
+#### Click on "Blood Bank Data" Button
+- Click on the "Blood Bank Data" button in the admin dashboard.
+
+#### Verify Display of Blood Bank Data
+- Confirm that the admin can see the current blood type and quantity available in the blood bank.
+
+#### Click on Browser Back Button
+- Click on the browser's back button.
+
+#### Verify Redirection to Admin Dashboard
+- Confirm that the admin is redirected to the admin dashboard.
+
+### Postconditions
+- Ensure the application state is as expected after viewing recipient records, donor records, and blood bank data.
+- Confirm that clicking the browser back button redirects the admin to the admin dashboard in all cases.
+
+
+## Acceptance Test Case for Footer Links
+
+### Objective
+Verify that the footer links for "About," "Contact," and "Directions" function correctly. Confirm that clicking on each link opens the corresponding page or map. Additionally, check that the browser back button works as expected.
+
+### Preconditions
+- Ensure the application is accessible.
+- Navigate to any page containing the footer.
+
+### Test Steps
+#### Click on "About" Link
+- Click on the "About" link in the footer.
+
+#### Verify Opening of "About" Page
+- Confirm that a new page opens containing information about the blood bank.
+- Check for relevant details and content.
+
+#### Click on Browser Back Button
+- Click on the browser's back button.
+
+#### Verify Return to Previous Page
+- Confirm that the user is returned to the previous page.
+
+#### Click on "Contact" Link
+- Click on the "Contact" link in the footer.
+
+#### Verify Opening of "Contact" Page
+- Confirm that a new page opens containing the blood bank's address and contact details.
+
+#### Click on Browser Back Button
+- Click on the browser's back button.
+
+#### Verify Return to Previous Page
+- Confirm that the user is returned to the previous page.
+
+#### Click on "Directions" Link
+- Click on the "Directions" link in the footer.
+
+#### Verify Opening of Map
+- Confirm that a new page or map opens, displaying the blood bank's location.
+
+#### Click on Browser Back Button
+- Click on the browser's back button.
+
+#### Verify Return to Previous Page
+- Confirm that the user is returned to the previous page.
+
+### Postconditions
+- Ensure the application state is as expected after testing the footer links.
+- Confirm that clicking the browser back button returns the user to the previous page in all cases.
+
+
