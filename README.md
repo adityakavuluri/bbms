@@ -9,7 +9,7 @@ the unit tests are covered as per standards 93% of coverage, a sceenshot of the 
 
 
 
-## Acceptance Test Case are as follows:
+- Acceptance Test Case are as follows:
 
 
 ## Acceptance Test Case for Sign-Up
