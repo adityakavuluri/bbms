@@ -1,4 +1,4 @@
-##This is the front end on React js
+## This is the front end on React js for BBMS - Blood Bank Management System
 ## Backend Available at 
 - https://github.com/adityakavuluri/bbmsBackend
 
