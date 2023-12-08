@@ -1,6 +1,6 @@
 ## This is the front end on React js for BBMS - Blood Bank Management System
 ## Backend Available at 
-- https://github.com/adityakavuluri/bbmsBackend
+- https://github.com/adityakavuluri/bbmsBackend : has the instructions for running unit testcases, the database used in hosted on Azure SQL database, needs IP authetication to access the database at the movement.
 
 
 ## Acceptance Test Case for Sign-Up
